@@ -1,6 +1,6 @@
-# loggers
-Sample-Logging File for log4j
-# For Springboot projects two changes are required in pom.xml
+# Sample-Logging File for log4j Springboot
+## Changes Required
+
 ## 
  - Remove default logging provided by springboot
  ````
@@ -17,8 +17,7 @@ Sample-Logging File for log4j
     
     ````
     
-##
-  - Add a dedicated log4j2 dependency
+- Add log4j2 specific dependency
 ````
         <dependency>
 			<groupId>org.springframework.boot</groupId>
