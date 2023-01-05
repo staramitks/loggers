@@ -4,7 +4,7 @@ Sample-Logging File for log4j
 ## 
  - Remove default logging provided by springboot
  ````
- <dependency>
+    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
@@ -13,15 +13,16 @@ Sample-Logging File for log4j
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+    </dependency>
     
     ````
+    
 ##
-Add a dedicated log4j2 dependency
+  - Add a dedicated log4j2 dependency
 ````
-<dependency>
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
+        </dependency>
 ````
 
