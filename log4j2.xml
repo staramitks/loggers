@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="WARN">
+
+    <Propetesties>
+        <Propetesty name="project">SpringScheduler</Propetesty>
+        <Propetesty name="logRoot">C:/opt/data/logs</Propetesty>
+    </Propetesties>
+
+    <Appenders>
+        <!-- Console -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{MMM dd yyyy HH:mm:ss} %t %-5p %-30c %.30x - %m%n" />
+        </Console>
+
+        <!-- Application log -->
+        <RollingFile name="FileAppender"
+                     fileName="${logRoot}/${project}/${project}.log"
+                     filePattern="${logRoot}/${project}/${project}.log.%d{yyyy-MM-dd}"
+                     immediateFlush="false" append="true">
+            <PatternLayout>
+                <Pattern>%d{MMM dd yyyy HH:mm:ss} %5p %.30c %.30x - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+        <Async name="AsyncLog" blocking="false" bufferSize="100000">
+            <AppenderRef ref="FileAppender" />
+        </Async>
+
+        <!-- Admin log -->
+        <RollingFile name="AdminFileAppender"
+                     fileName="${logRoot}/${project}/admin.log" filePattern="${logRoot}/${project}/admin.log.%d{yyyy-MM-dd}-%i.log.gz"
+                     immediateFlush="false" append="true">
+            <PatternLayout>
+                <Pattern>%d{MMM dd yyyy HH:mm:ss} %t %5p %.30c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+        <Async name="AdminAsyncLog" blocking="false" bufferSize="100000">
+            <AppenderRef ref="AdminFileAppender" />
+        </Async>
+
+        <RollingFile name="mypocRecapFileAppender"
+                     fileName="${logRoot}/${project}/mypocRecap.log"
+                     filePattern="${logRoot}/${project}/mypocRecap.log.%d{yyyy-MM-dd}.log.gz"
+                     immediateFlush="true" append="true">
+            <PatternLayout>
+                <Pattern>%d{MMM dd yyyy HH:mm:ss} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="mypocRecapAsyncFileAppender"
+                     fileName="${logRoot}/${project}/mypocRecapAsync.log"
+                     filePattern="${logRoot}/${project}/mypocRecapAsync.log.%d{yyyy-MM-dd}.log.gz"
+                     immediateFlush="false" append="true">
+            <PatternLayout>
+                <Pattern>%d{MMM dd yyyy HH:mm:ss} - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
+        <Async name="mypocRecapAsyncLog" blocking="false" bufferSize="100000">
+            <AppenderRef ref="mypocRecapAsyncFileAppender" />
+        </Async>
+
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="mypocRecap" level="info"
+                additivity="false">
+            <Appender-ref ref="mypocRecapFileAppender" />
+            <Appender-ref ref="Console" />
+            <Appender-ref ref="mypocRecapAsyncLog" />
+        </Logger>
+
+        <Logger name="com.amit.mypoc.test.scheduler.SchedulerApplication" level="info" additivity="false">
+            <Appender-ref ref="AdminAsyncLog" />
+            <Appender-ref ref="Console" />
+        </Logger>
+
+        <Root level="INFO">
+            <Appender-ref ref="AsyncLog" />
+            <Appender-ref ref="Console" />
+        </Root>
+    </Loggers>
+
+</Configuration>
